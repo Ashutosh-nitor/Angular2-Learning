@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -12,6 +13,7 @@ describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule.withRoutes([]) ],
       declarations: [ AppComponent ]
     })
     .compileComponents();
@@ -22,4 +24,17 @@ describe('AppComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges(); 
   });
+
+  it('should have router outlet', () => {
+    let debugElement = fixture.debugElement.query(By.directive(RouterOutlet));
+  });
+
+  it('should have a link to todo page', () => {
+    let debugElement = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+    let index = debugElement.findIndex(de => {
+      de.properties['href'] === '/todos'
+    });
+    expect(index).toBeGreaterThan(-1);
+  });
+   
 });

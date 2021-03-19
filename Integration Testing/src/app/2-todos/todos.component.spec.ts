@@ -1,10 +1,10 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import 'rxjs/add/observable/from';
 
 import { TodosComponent } from './todos.component';
 import { TodoService } from './todo.service';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/from';
 
 //NOTE: I've deliberately excluded this suite from running
 // because the test will fail. This is because we have not 
