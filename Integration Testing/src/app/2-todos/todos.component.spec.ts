@@ -1,9 +1,10 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import 'rxjs/add/observable/from';
 
 import { TodosComponent } from './todos.component';
+import { TodoService } from './todo.service';
+import { Observable } from 'rxjs/Observable';
 
 //NOTE: I've deliberately excluded this suite from running
 // because the test will fail. This is because we have not 
@@ -26,10 +27,17 @@ xdescribe('TodosComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TodosComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges(); // Here angular again call ngOnInit
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load todos from the server', () => {
+    let service = TestBed.get(TodoService) // It only returns the dependencies that are registered at the module level not those are at component level.
+    spyOn(service, 'getTodos').and.returnValue(Observable.from([ 1, 2, 3]));
+    fixture.detectChanges();
+    expect(component.todos.length).toBe(3);
   });
 });
